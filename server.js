@@ -25,6 +25,11 @@ io.on("connection", (socket) => {
   // Send the existing whiteboard data to the user
   socket.emit("load_whiteboard", whiteboardData);
 
+  // Listen for draw start events and store them
+  socket.on("draw_start", (data) => {
+    whiteboardData.push({ ...data, type: "start" });
+  });
+
   // Listen for draw events and broadcast them
   socket.on("draw", (data) => {
     whiteboardData.push(data);
